@@ -10,6 +10,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,15 +20,13 @@ import static org.junit.Assert.*;
 public class NewJPanelTest {
     // here we declare a class level variable so that this variable can we accessed by all methods.
     static String [] customer_value;
+    static Object [] car_detail;
     public NewJPanelTest() {
     }
     
     // BeforeClass are fired once as this test class are executed.
     @BeforeClass
-    public static void setUpClass() {
-        // below is how we obtain and store the value inside the variable
-        // the value are coming from dialog box input entered by the user.
-        customer_value = NewJPanel.enterCustomer();
+    public static void setUpClass() {        
     }
     
     
@@ -35,37 +35,67 @@ public class NewJPanelTest {
     }
 
     @Test
-    public void testName(){
-        // we are using assert false so that it will fail if the supplied valued is true.
-        // at first we tried using customer_value[0] == null but we found out that
-        // it was not null but an empty string ""
-        assertFalse("Name cannot be empty",customer_value[0].equals(""));
+    public void testEmptyName(){
+        // we are using assert true so that it will fail if the expected error message is not found.
+        Owner c = new Owner( "", "no 26", "0122222222");
+        List<String> owner_error_messages = c.validates();
+        String expected_error_message = "Name must not be empty. [name]";
+        assertTrue("Validation for empty name checking failed", owner_error_messages.contains(expected_error_message));
     }
     
     @Test
-    public void testAddress(){
+    public void testEmptyAddress(){
         // same as above
-        assertFalse("Address cannot be empty",customer_value[1].equals(""));
+        Owner c = new Owner( "Ahmad", "", "0122222222");
+        List<String> owner_error_messages = c.validates();
+        String expected_error_message = "Address must not be empty. [address]";
+        assertTrue("Validation for empty address checking failed", owner_error_messages.contains(expected_error_message));
     }
     
     @Test
-    public void testPhoneEmpty(){
+    public void testEmptyPhone(){
         // same as above
-        assertFalse("Phone cannot be empty",customer_value[2].equals(""));
+        Owner c = new Owner( "Ahmad", "no 26", "");
+        List<String> owner_error_messages = c.validates();
+        String expected_error_message = "Phone must not be empty. [phone]";
+        assertTrue("Validation for empty phone checking failed", owner_error_messages.contains(expected_error_message));
     }
     
     @Test
-    public void testPhoneNotNumber(){
-        // by trying to convert or parsing the string into integer and by catching it if it throws an error
-        // we are able to know whether the string is a number or not.
-        // By catching it, we know that conversion / parsing is fail and we just raise a fail on that.
-        try{
-            Integer.parseInt(customer_value[2]); 
-        } catch(NumberFormatException e) { 
-            fail("Phone number does not contain all number");
-        }
+    public void testPhoneNotInteger(){
+        // same as above
+        Owner c = new Owner( "Ahmad", "no 26", "asdf");
+        List<String> owner_error_messages = c.validates();
+        String expected_error_message = "Phone number must be all Integer. [phone]";
+        assertTrue("Validation for integer phone checking failed", owner_error_messages.contains(expected_error_message));
     }
-            
+//    
+//    @Test
+//    public void testCarDetailModel(){
+//        assertFalse("Car model cannot be empty",car_detail[0].equals(""));
+//    }
+//    
+//    @Test
+//    public void testCarDetailYear(){
+//        // test whether app allow user to enter only integer or not for car year input.
+//        // test will fail if app allow non integer input.
+//        try{
+//            Integer.parseInt( car_detail[1].toString() ); 
+//        } catch(NumberFormatException e) { 
+//            fail("Car year does not contain all number");
+//        }
+//    }
+//    
+//    @Test
+//    public void testCarDetailRegNo(){
+//        assertFalse("Car registration no cannot be empty",car_detail[2].equals(""));        
+//    }
+//    
+//    @Test
+//    public void testCarDetailColor(){
+//        assertFalse("Car color cannot be empty",car_detail[3].equals(""));
+//    }
+//    
 //    /**
 //     * Test of addCar method, of class NewJPanel.
 //     */

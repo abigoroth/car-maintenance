@@ -376,7 +376,13 @@ public class NewJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private int askCarYear(String msg){
+    public static int askCarYear(String msg){
+        String message;
+        try {
+            message = msg;
+        } catch (Exception e) {
+            
+        }
         int year = 0;
         try{
             year = Integer.parseInt( JOptionPane.showInputDialog(msg) );
@@ -388,11 +394,9 @@ public class NewJPanel extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         // add car
-        String model = JOptionPane.showInputDialog("Enter model: ");
-        int year = askCarYear("Enter year : ");
-        String registration_no = JOptionPane.showInputDialog("Enter registration number: ");
-        String color = JOptionPane.showInputDialog("Enter color: ");
-        owner.addCar(model, year, registration_no, color);
+        Object[] obj = enterCarDetail();
+//        owner.addCar(model, year, registration_no, color);
+        owner.addCar(obj[0].toString() , Integer.parseInt( obj[1].toString() ), obj[2].toString() , obj[3].toString());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -477,15 +481,22 @@ public class NewJPanel extends javax.swing.JPanel {
     //     modelOwner.addElement("hehe from main");
     //     }
     public static String[] enterCustomer(){
-        
-         String name = JOptionPane.showInputDialog("Enter customer name: ");
+        String name = JOptionPane.showInputDialog("Enter customer name: ");
         String address = JOptionPane.showInputDialog("Enter address: ");
         String phone = JOptionPane.showInputDialog("Enter phone number: ");
         String [] var = {name,address,phone};
-        
-        
         return var;
     }
+    
+    public static Object[] enterCarDetail(){
+        String model = JOptionPane.showInputDialog("Enter model: ");
+        int year = askCarYear("Enter year : ");
+        String registration_no = JOptionPane.showInputDialog("Enter registration number: ");
+        String color = JOptionPane.showInputDialog("Enter color: ");
+        Object[] obj = {model, year, registration_no, color};
+        return obj;
+    }
+    
 //    public String[] enterCar(){
 //        String model = JOptionPane.showInputDialog("Enter model: ");
 //        int year = askCarYear("Enter year : ");

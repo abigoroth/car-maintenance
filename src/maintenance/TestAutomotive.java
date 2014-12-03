@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 import javax.swing.*;
 
 import javax.swing.DefaultListModel;
@@ -95,6 +96,25 @@ class Owner {
 	}
 	public Car[] getCars(){ return cars; }
 	public int getCarCounter(){ return carCounter; }
+        public List<String> validates(){
+            List<String> em = new ArrayList<String>();
+            
+            // checking if phone number is empty
+            if (phone.equals("")) { em.add("Phone must not be empty. [phone]"); }
+            
+            // checking phone number is Integer
+            try {
+                Integer.parseInt( phone ); 
+            } catch (Exception e) {
+                em.add("Phone number must be all Integer. [phone]");
+            }
+            // checking name must not be empty
+            if (name.equals("")) { em.add("Name must not be empty. [name]"); }
+            
+            // checking address must not be empty
+            if (address.equals("")) { em.add("Address must not be empty. [address]"); }
+            return em;
+        }
 }
 
 class OwnerList {

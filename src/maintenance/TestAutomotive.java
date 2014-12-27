@@ -100,7 +100,7 @@ class Owner {
             List<String> em = new ArrayList<String>();
             
             // checking if phone number is empty
-            if (phone.equals("")) { em.add("Phone must not be empty. [phone]"); }
+//            if (phone.equals("")) { em.add("Phone must not be empty. [phone]"); }
             
             // checking phone number is Integer
             try {
